@@ -1,386 +1,92 @@
+```html
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok for Developers | Creator & Business API Ecosystem</title>
-    <script src="https://jsdelivr.net"></script>
-    <style>
-        :root {
-            --bg-primary: #121212;
-            --bg-secondary: #1f1f1f;
-            --bg-card: #2f2f2f;
-            --text-main: #ffffff;
-            --text-muted: #a6a6a6;
-            --tt-cyan: #00f2fe;
-            --tt-pink: #fe0979;
-            --accent: #25f4ee;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            line-height: 1.5;
-            overflow-x: hidden;
-        }
-
-        /* Header & Navigation */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-box {
-            background: linear-gradient(45deg, var(--tt-pink), var(--tt-cyan));
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--text-main);
-        }
-
-        .nav-btns {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1.2rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-text {
-            color: var(--text-main);
-        }
-
-        .btn-primary {
-            background-color: var(--text-main);
-            color: var(--bg-primary);
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #e6e6e6;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 10rem 2rem 6rem;
-            text-align: center;
-            background: radial-gradient(circle at top right, rgba(0,242,254,0.07), transparent 40%),
-                        radial-gradient(circle at top left, rgba(254,9,121,0.07), transparent 40%);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(90deg, var(--tt-cyan), var(--tt-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .hero-btns {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .btn-large {
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
-            border-radius: 6px;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--text-main);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Content Container */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Section Title */
-        .section-title {
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .section-title h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-title p {
-            color: var(--text-muted);
-        }
-
-        /* Product Cards Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 6rem;
-        }
-
-        .card {
-            background-color: var(--bg-secondary);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255,255,255,0.15);
-        }
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background-color: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-link {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .card-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Documentation & Sandbox Tabs */
-        .doc-section {
-            background-color: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 3rem;
-            margin-bottom: 6rem;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding-bottom: 1rem;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .tab-btn.active {
-            color: var(--text-main);
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--tt-cyan), var(--tt-pink));
-        }
-
-        .tab-content {
-            display: none;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .tab-content.active {
-            display: grid;
-        }
-
-        .tab-text h3 {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .tab-text p {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .code-block {
-            background-color: var(--bg-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            color: #39ec9b;
-            border: 1px solid rgba(255,255,255,0.05);
-            overflow-x: auto;
-        }
-
-        .code-block span.keyword { color: #f92672; }
-        .code-block span.string { color: #e6db74; }
-        .code-block span.comment { color: #75715e; }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 4rem 2rem;
-            background-color: var(--bg-secondary);
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-col h4 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1.5rem;
-            color: var(--text-muted);
-        }
-
-        .footer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-col a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer-col a:hover {
-            color: var(--text-main);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            nav, .nav-btns .btn-text { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .tab-content { grid-template-columns: 1fr; gap: 2rem; }
-            .doc-section { padding: 1.5rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emotions Punta Cana</title>
+  <meta name="description" content="Official website for Emotions Punta Cana, including services, TikTok integration information, contact details, Privacy Policy, and Terms of Service." />
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; line-height: 1.6; color: #222; background: #f7f7f7; }
+    header { background: #004f6e; color: white; padding: 40px 20px; text-align: center; }
+    nav { background: #03384d; padding: 12px; text-align: center; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+    section { max-width: 950px; margin: 25px auto; padding: 30px; background: white; border-radius: 8px; }
+    footer { text-align: center; padding: 25px; background: #03384d; color: white; margin-top: 30px; }
+    .button-link { display: inline-block; margin: 8px 10px 8px 0; padding: 10px 16px; background: #004f6e; color: white; text-decoration: none; border-radius: 5px; }
+  </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="nav-container">
-            <div class="logo-section">
+<header id="home">
+  <h1>Emotions Punta Cana</h1>
+  <p>Official website for Emotions Punta Cana services, marketing support, TikTok integration, Privacy Policy, and Terms of Service.</p>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#about">About Us</a>
+  <a href="#services">Services</a>
+  <a href="#tiktok">TikTok Integration</a>
+  <a href="#contact">Contact</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="terms.html">Terms of Service</a>
+</nav>
+
+<section id="about">
+  <h2>About Us</h2>
+
+  <p>I was born and raised in the Caribbean, Dominican Republic. My native language is Spanish and my second language is English.</p>
+
+  <p>As a person, I am very social and enjoy establishing and building relationships. I love meeting people and connecting with every person I meet.</p>
+
+  <p>I love the high-tech industry, and that is what I do for a living. However, I recently discovered that my biggest passion and motivation is giving back to others and to the community.</p>
+
+  <p>Sometimes we live in our own professional and work environment and forget about the most important things in life: serving God, providing help, offering support, and caring for those who are in real need. For me, that is very important, and it has become part of my life.</p>
+
+  <p>At work, I am customer-centric and a team player. I am always open to helping and supporting customers, partners, and team members. I also like to take a fun and enjoyable approach to work. I believe you should love your work and put maximum effort toward the smart goals you want to accomplish.</p>
+
+  <p>Regarding my professional career, I have worked as a Telecom, Network, and Architect Engineer for more than 22 years in the design, implementation, configuration, and troubleshooting of IP and Mobility Packet Core Networks.</p>
+
+  <p>I have a strong devotion to trending and new technologies, and I spend much of my time around Data Center and Cloud, Routing and Switching, Wireless, Security, NetOps, Programmability, and Service Provider IP/ISP backhaul environments. Most of my work experience comes from enterprise environments and telecom operators, including Orange Dominicana – France Telecom Group, DgTec, T-Mobile, and AT&T USA/Mexico.</p>
+
+  <p>My family is my biggest treasure. When I am not busy at work, I spend most of my time with my beautiful wife and kids.</p>
+</section>
+
+<section id="services">
+  <h2>Services</h2>
+  <p>Emotions Punta Cana provides marketing services if needed, including digital presence support, social media coordination, content support, and online business communication.</p>
+</section>
+
+<section id="tiktok">
+  <h2>TikTok Integration</h2>
+  <p>Emotions Punta Cana integrates our website and other authorized websites with TikTok. The purpose of this integration is to support social media publishing, marketing activities, content management, and engagement review through TikTok developer tools and APIs.</p>
+
+  <p>This integration is intended only for authorized business use by Emotions Punta Cana and approved clients or partners.</p>
+
+  <p>Emotions Punta Cana is not affiliated with, endorsed by, or sponsored by TikTok or ByteDance.</p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p><strong>Business Name:</strong> Emotions Punta Cana</p>
+  <p><strong>Website:</strong> emotionspuntacana.com</p>
+  <p><strong>Location:</strong> Punta Cana, Dominican Republic</p>
+  <p><strong>Email:</strong> joserafael.ceara@gmail.com</p>
+</section>
+
+<section id="legal">
+  <h2>Privacy Policy and Terms of Service</h2>
+  <p>Please review our Privacy Policy and Terms of Service for more information.</p>
+  <a class="button-link" href="privacy.html">Privacy Policy</a>
+  <a class="button-link" href="terms.html">Terms of Service</a>
+</section>
+
+<footer>
+  <p>&copy; 2026 Emotions Punta Cana. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+```
